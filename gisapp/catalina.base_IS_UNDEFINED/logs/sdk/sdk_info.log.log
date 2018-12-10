@@ -1,0 +1,59 @@
+.2018-12-07 20:45:22.742 com.vi.Application INFO - Starting Application on sharesite with PID 4764 (E:\workspace\projectsource\gisapp\target\classes started by Administrator in E:\workspace\projectsource\gisapp)
+.2018-12-07 20:45:22.743 com.vi.Application INFO - No active profile set, falling back to default profiles: default
+.2018-12-07 20:45:23.077 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext INFO - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1518ca8: startup date [Fri Dec 07 20:45:23 CST 2018]; root of context hierarchy
+.2018-12-07 20:45:23.136 org.hibernate.validator.internal.util.Version INFO - HV000001: Hibernate Validator 5.3.6.Final
+.2018-12-07 20:45:25.430 org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer INFO - Tomcat initialized with port(s): 8080 (http)
+.2018-12-07 20:45:25.444 org.apache.catalina.core.StandardService INFO - Starting service [Tomcat]
+.2018-12-07 20:45:25.445 org.apache.catalina.core.StandardEngine INFO - Starting Servlet Engine: Apache Tomcat/8.5.23
+.2018-12-07 20:45:25.552 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] INFO - Initializing Spring embedded WebApplicationContext
+.2018-12-07 20:45:25.552 org.springframework.web.context.ContextLoader INFO - Root WebApplicationContext: initialization completed in 2480 ms
+.2018-12-07 20:45:25.698 org.springframework.boot.web.servlet.ServletRegistrationBean INFO - Mapping servlet: 'dispatcherServlet' to [/]
+.2018-12-07 20:45:25.702 org.springframework.boot.web.servlet.FilterRegistrationBean INFO - Mapping filter: 'characterEncodingFilter' to: [/*]
+.2018-12-07 20:45:25.703 org.springframework.boot.web.servlet.FilterRegistrationBean INFO - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+.2018-12-07 20:45:25.703 org.springframework.boot.web.servlet.FilterRegistrationBean INFO - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+.2018-12-07 20:45:25.703 org.springframework.boot.web.servlet.FilterRegistrationBean INFO - Mapping filter: 'requestContextFilter' to: [/*]
+.2018-12-07 20:45:25.961 com.alibaba.druid.pool.DruidDataSource INFO - {dataSource-1} inited
+.2018-12-07 20:45:26.300 org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean INFO - Building JPA container EntityManagerFactory for persistence unit 'default'
+.2018-12-07 20:45:26.563 org.hibernate.Version INFO - HHH000412: Hibernate Core {5.0.12.Final}
+.2018-12-07 20:45:26.565 org.hibernate.cfg.Environment INFO - HHH000206: hibernate.properties not found
+.2018-12-07 20:45:26.566 org.hibernate.cfg.Environment INFO - HHH000021: Bytecode provider name : javassist
+.2018-12-07 20:45:26.612 org.hibernate.annotations.common.Version INFO - HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+.2018-12-07 20:45:27.188 org.hibernate.dialect.Dialect INFO - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+.2018-12-07 20:45:27.401 org.hibernate.id.UUIDHexGenerator WARN - HHH000409: Using org.hibernate.id.UUIDHexGenerator which does not generate IETF RFC 4122 compliant UUID values; consider using org.hibernate.id.UUIDGenerator instead
+.2018-12-07 20:45:27.758 org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean INFO - Initialized JPA EntityManagerFactory for persistence unit 'default'
+.2018-12-07 20:45:28.478 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter INFO - Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1518ca8: startup date [Fri Dec 07 20:45:23 CST 2018]; root of context hierarchy
+.2018-12-07 20:45:28.579 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping INFO - Mapped "{[/video/queryPageWithParams]}" onto public java.util.List<com.vi.entity.VideoPoint> com.vi.controller.VideoPointController.queryAllVideoInfos(java.lang.String)
+.2018-12-07 20:45:28.580 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping INFO - Mapped "{[/video/queryAppSecret]}" onto public java.lang.String com.vi.controller.VideoPointController.querySecret()
+.2018-12-07 20:45:28.584 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping INFO - Mapped "{[/map]}" onto public java.lang.String com.vi.controller.WebPageController.mapHtml(java.util.HashMap<java.lang.String, java.lang.Object>)
+.2018-12-07 20:45:28.584 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping INFO - Mapped "{[/videoTest]}" onto public java.lang.String com.vi.controller.WebPageController.videoHtml(java.util.HashMap<java.lang.String, java.lang.Object>)
+.2018-12-07 20:45:28.589 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping INFO - Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+.2018-12-07 20:45:28.589 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping INFO - Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+.2018-12-07 20:45:29.354 org.springframework.web.servlet.handler.SimpleUrlHandlerMapping INFO - Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+.2018-12-07 20:45:29.354 org.springframework.web.servlet.handler.SimpleUrlHandlerMapping INFO - Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+.2018-12-07 20:45:29.402 org.springframework.web.servlet.handler.SimpleUrlHandlerMapping INFO - Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+.2018-12-07 20:45:29.774 org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration$WelcomePageHandlerMapping INFO - Adding welcome page: class path resource [pages/index.html]
+.2018-12-07 20:45:31.057 org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer INFO - LiveReload server is running on port 35729
+.2018-12-07 20:45:31.119 org.springframework.jmx.export.annotation.AnnotationMBeanExporter INFO - Registering beans for JMX exposure on startup
+.2018-12-07 20:45:31.120 org.springframework.jmx.export.annotation.AnnotationMBeanExporter INFO - Bean with name 'dataSource' has been autodetected for JMX exposure
+.2018-12-07 20:45:31.124 org.springframework.jmx.export.annotation.AnnotationMBeanExporter INFO - Located MBean 'dataSource': registering with JMX server as MBean [com.alibaba.druid.pool:name=dataSource,type=DruidDataSource]
+.2018-12-07 20:45:31.161 org.apache.coyote.http11.Http11NioProtocol INFO - Initializing ProtocolHandler ["http-nio-8080"]
+.2018-12-07 20:45:31.176 org.apache.coyote.http11.Http11NioProtocol INFO - Starting ProtocolHandler ["http-nio-8080"]
+.2018-12-07 20:45:31.190 org.apache.tomcat.util.net.NioSelectorPool INFO - Using a shared selector for servlet write/read
+.2018-12-07 20:45:31.211 org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer INFO - Tomcat started on port(s): 8080 (http)
+.2018-12-07 20:45:31.217 com.vi.Application INFO - Started Application in 8.885 seconds (JVM running for 9.474)
+.2018-12-07 20:46:04.562 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] INFO - Initializing Spring FrameworkServlet 'dispatcherServlet'
+.2018-12-07 20:46:04.562 org.springframework.web.servlet.DispatcherServlet INFO - FrameworkServlet 'dispatcherServlet': initialization started
+.2018-12-07 20:46:04.601 org.springframework.web.servlet.DispatcherServlet INFO - FrameworkServlet 'dispatcherServlet': initialization completed in 39 ms
+.2018-12-07 20:46:04.657 org.thymeleaf.TemplateEngine INFO - [THYMELEAF] INITIALIZING TEMPLATE ENGINE
+.2018-12-07 20:46:04.699 org.thymeleaf.templateresolver.AbstractTemplateResolver INFO - [THYMELEAF] INITIALIZING TEMPLATE RESOLVER: org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver
+.2018-12-07 20:46:04.699 org.thymeleaf.templateresolver.AbstractTemplateResolver INFO - [THYMELEAF] TEMPLATE RESOLVER INITIALIZED OK
+.2018-12-07 20:46:04.699 org.thymeleaf.messageresolver.AbstractMessageResolver INFO - [THYMELEAF] INITIALIZING MESSAGE RESOLVER: org.thymeleaf.spring4.messageresolver.SpringMessageResolver
+.2018-12-07 20:46:04.700 org.thymeleaf.messageresolver.AbstractMessageResolver INFO - [THYMELEAF] MESSAGE RESOLVER INITIALIZED OK
+.2018-12-07 20:46:04.720 org.thymeleaf.TemplateEngine INFO - [THYMELEAF] TEMPLATE ENGINE INITIALIZED
+.2018-12-07 20:46:05.974 org.hibernate.hql.internal.QueryTranslatorFactoryInitiator INFO - HHH000397: Using ASTQueryTranslatorFactory
+.2018-12-07 20:47:39.225 com.hikvision.artemis.sdk.ArtemisHttpUtil INFO - the Artemis Request is Success,statusCode:200 SuccessMsg:{"code":"0","msg":"SUCCESS","data":{"appSecret":"d832645d6a43c2f93701ed5601205ab54c899ab81a57923087cd18e1e0c71ea7994d94ebf2fae3921147f627bc681d8e33c20b1f8f818fd920e582d1a3fad349c54f91966573fa60f813af7386ee1e1808ae5a67f9b5d91ff9af5505ef0e43db50beafbd4a1d1c775a38183a8a75ec73acb96100384e8cb59ca25fb7ef67688304973318d4fe367d8254381c0cf0c1290807f1a5e97b5e6c20540b94a8023c069593c39da6a5868ab976657c9f761b60c64798f1d0b9cd31039a01db643379b52ef571b02a5c6433a0fb5b6f5919f831f71fcbcc3217fd661b62b8472035c2bfb86d2682c3bdbd3795cbfb82f7887e0ef6429fe2a861880dc1c9381952bfad7a","time":"20181207204748","timeSecret":"832aafb21e4bb7580e7e817c02ec0a94"}}
+.2018-12-07 20:48:52.377 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext INFO - Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1518ca8: startup date [Fri Dec 07 20:45:23 CST 2018]; root of context hierarchy
+.2018-12-07 20:48:52.380 org.springframework.jmx.export.annotation.AnnotationMBeanExporter INFO - Unregistering JMX-exposed beans on shutdown
+.2018-12-07 20:48:52.380 org.springframework.jmx.export.annotation.AnnotationMBeanExporter INFO - Unregistering JMX-exposed beans
+.2018-12-07 20:48:52.382 org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean INFO - Closing JPA EntityManagerFactory for persistence unit 'default'
+.2018-12-07 20:48:52.387 com.alibaba.druid.pool.DruidDataSource INFO - {dataSource-1} closed

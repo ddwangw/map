@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <meta charset="utf-8"/>
+    <title>ArcGIS demo</title>
+    <link type="text/css" rel="stylesheet" href="./arcgis_js_api/library/4.9/esri/css/main.css"/>
+    <link href="./css/layui.css" type="text/css" rel="stylesheet"/>
+    <script src="./arcgis_js_api/library/4.9/init.js"></script>
+    <script src="./js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/layui.js"></script>
+	<script src="./js/nicePage.js"></script>
+	<script src="./js/map/videoPoint.js"></script>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #video{
+        	position: absolute;
+		    top: 0px;
+		    right: 0px;
+		    width: 320px;
+		    height: 265px;
+		    margin: 10px;
+		    box-shadow: white 0px 0px 1px 1px;
+		    display:none;
+        }
+        #close{
+        	height: 25px;
+        	line-height: 25px;
+        	padding-right: 10px;
+        	cursor: pointer;
+		    color: white;
+		    text-align: right;
+		    background-color: black;
+        }
+        #videoTableList{
+       	    position: absolute;
+		    top: 0px;
+		    right: 0px;
+		    width: 500px;
+		    height: 460px;
+		    margin: 10px;
+        }
+        .esri-view-height-less-than-medium .esri-popup__main-container {
+		    max-height: 300px;
+		}
+		.esri-view-width-xlarge .esri-popup__main-container {
+		    max-width: 460px;
+		    width: 320px;
+		}
+		.esri-popup__feature-buttons .esri-popup__action {
+		    max-width: 60%;
+		}
+    </style>
+</head>
+ 
+<body>
+<div id="viewDiv"></div>
+<!-- 地图点位数据查询列表 -->
+<div id="videoTableList">
+    <input type="text" id="videoName" placeholder="请输入查询地址" autocomplete="off" class="layui-input" style="width:60%;display: inline;"/>
+    <button class="layui-btn" id="query" style="vertical-align: unset;">查询</button>
+	<div style="width: 74%;background-color: white;">
+		<!--以下为两个必须div元素-->
+		<div id="table"></div>
+		<div id="pageBar" style="margin-left: 10px;"></div>
+	</div>
+</div>
+<div id="video">
+	<div id="close" onclick="disableVideo();">关闭</div>
+	<video  width="320" height="240" controls="controls" autoplay="autoplay">
+		<source src="./img/movie.ogg" type="video/ogg"></source>
+	</video>
+</div>
+<script>
+	require([
+			"esri/Map",
+			"esri/layers/TileLayer",
+			"esri/Basemap",
+	        "esri/views/MapView",
+	        "esri/PopupTemplate",
+	        "esri/Graphic",
+	        "dojo/domReady"], 
+	    function (Map,TileLayer,Basemap,MapView,PopupTemplate,Graphic) {
+	    	var layer = new TileLayer({
+	          	url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer"
+	        });
+	        var customBasemap = new Basemap({
+		        baseLayers: [layer],
+		        title: "Custom Basemap",
+		        id: "myBasemap"
+		    });
+	        
+	        var map = new Map({
+	            //basemap: "streets"//ESRI提供的底 图
+	            basemap: customBasemap
+	        });
+	        //二维视图
+	        var view = new MapView({
+	            map: map,
+	            container: "viewDiv",
+	            center: [121.3453611,31.46216667],
+	            zoom: 12
+	        });
+	       var picMarkerSymbol = {
+	            type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+				url: "./img/video.png",
+				width: "42px",
+				height: "42px"
+	        };
+	       view.popup.actions = [{ id: "show-realtime", title: "查看实时视频",className:"esri-icon-time-clock"}];
+	       view.popup.on("trigger-action", function(event){
+				if(event.action.id === "show-realtime"){
+					alert($(event.target.content)[0].graphic.attributes[0].videoId);
+					console.log($(event.target.content)[0].graphic.attributes[0].videoId);
+				}
+			});
+	        var markerSymbol = {
+	        		 	type: "simple-marker",  // autocasts as new SimpleMarkerSymbol()
+	     	        	style: "square",
+	     	        	color: "blue",
+	     	        	size: "12px",  // pixels
+	     	        	outline: {  // autocasts as new SimpleLineSymbol()
+	     	         	color: [ 255, 255, 0 ],
+	     	         	width: 3  // points
+	     	        }
+		        };
+	        var graphicObjs ={};
+	        var tempGraphicObj = null;
+	        //初始化video list table 点击事件
+	        initTableList(function(obj){
+	        	var checkVideoPointGraphic = graphicObjs[obj.children[0].innerText];
+	        	//判断之前是否为空
+	        	if(tempGraphicObj!=null){
+	        		view.graphics.remove(tempGraphicObj);
+	        		tempGraphicObj.symbol = markerSymbol;
+	        		view.graphics.add(tempGraphicObj);
+	        	}
+	        	view.graphics.remove(checkVideoPointGraphic);
+        		checkVideoPointGraphic.symbol = picMarkerSymbol;
+        		view.graphics.add(checkVideoPointGraphic);
+        		tempGraphicObj = checkVideoPointGraphic;
+        		
+        		//地图要重新定位
+        		view.center = checkVideoPointGraphic.geometry;
+        		//打开弹窗
+        		view.popup.open({
+        			title:obj.children[1].innerText,
+        			location:checkVideoPointGraphic.geometry,
+        			content:checkVideoPointGraphic.popupTemplate.content
+        		});
+	        });
+	        initPointTableList(function(result){
+	        	for(var key in graphicObjs){
+	        		view.graphics.remove(graphicObjs[key]);
+	        	}
+	        	
+	        	for(var i in result){
+	        		var row = result[i];
+	        		//封装摄像头点位信息
+			        var point={
+			            type: "point",
+			            longitude: row.videoLon,
+						latitude: row.videoLat
+			        };
+			        var pointPopupTemplate = new PopupTemplate({
+			        		title:row.videoName,
+							content:"<ul>"+
+			        				"<li>摄像头编号："+row.videoId+"</li>" +
+									"<li>摄像头类型："+row.type+"</li>" +
+									"<li>视频分辨率："+row.resolutionRatio+"</li>"+
+									"<li>管理单位名称："+row.manageDeptName+"</li>"+
+									"<li>摄像头所在地址："+row.address+"</li>"+
+									"<li>坐标经度："+row.videoLon+"</li>"+
+									"<li>坐标纬度："+row.videoLat+"</li>"+
+									"</ul>"
+							});
+									  
+			        var graphic =new Graphic({
+			        	attributes:[{videoId:row.videoId}],
+			            geometry: point,
+			            symbol: markerSymbol,
+			            popupTemplate:pointPopupTemplate
+			        });
+			        //将graphics添加到视窗图层
+			        view.graphics.add(graphic); 
+			        graphicObjs[row.videoId] = graphic;
+	        	}
+	        });
+    });
+    
+    function disableVideo(){
+    	$("#video").css('display','none');
+    }
+</script>
+</body>
+ 
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8" />
+
+<head>
+    <link rel="stylesheet" href="./css/ocx.css" />
+</head>
+<body>
+    <div class="func-point">&nbsp;&nbsp;监控画面</div>
+    <div class="video-position" style="width:500px; height:500px">
+        <p class="pop" style="display:block">加载失败</p>
+        <input type="hidden" name="config" id="config" value="ReqType:PlayReal;wndcount:1" />
+        <!-- 添加预览控件（需要先在windows下注册） -->
+        <object classid="CLSID:7E393848-7238-4CE3-82EE-44AF444B240A" id="PlayViewOCX" wmode="opaque" width="0" height="0" name="PlayViewOCX">
+        </object>
+    </div>
+    <div class="form">
+        <label for="PalyType">PalyType:</label>
+        <br />
+        <input type="text" class="PalyType text" value="PlayReal" />
+        <br />
+        <label for="SvrIp">SvrIp:</label>
+        <br />
+        <input type="text" class="SvrIp text" value="172.16.99.164" />
+        <br />
+        <label for="SvrPort">SvrPort:</label>
+        <br />
+        <input type="text" class="SvrPort text" value="443" />
+        <br />
+        <label for="appkey">appkey:</label>
+        <br />
+        <input type="text" class="appkey text" value="21325930" />
+        <br />
+        <label for="appSecret">appSecret:</label>
+        <p class="ppp">(这里填的不是直接提供的appSecret,而是调用接口后加密的appSecret)</p>
+        <br />
+        <input type="text" class="appSecret text" id="appSecret"/>
+        <br />
+        <label for="time">time:</label>
+        <br />
+        <input type="text" class="time text"  id="time"/>
+        <br />
+        <label for="timeSecret">timeSecret:</label>
+        <br />
+        <input type="text" class="timeSecret text" id="timeSecret"/>
+        <br />
+        <label for="httpsflag">httpsflag:</label>
+        <br />
+        <input type="text" class="httpsflag text" value="1" />
+        <br />
+        <label for="CamList">CamList:</label>
+        <br />
+        <input type="text" class="CamList text" value="31011324001180016006" />
+        <br />
+        <input type="submit" class="submit" value="视频预览播放" />
+    </div>
+    <script type="text/javascript" src="./js/jquery-1.12.1.js"></script>
+    <script type="text/javascript" src="./js/ocx.js"></script>
+</body>
+</html>
