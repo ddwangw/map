@@ -3,7 +3,10 @@
  
 <head>
     <meta charset="utf-8"/>
-    <title>ArcGIS demo</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>视频点位</title>
     <link type="text/css" rel="stylesheet" href="./arcgis_js_api/library/4.9/esri/css/main.css"/>
     <link href="./css/layui.css" type="text/css" rel="stylesheet"/>
     <script src="./arcgis_js_api/library/4.9/init.js"></script>
@@ -117,8 +120,8 @@
 	       view.popup.actions = [{ id: "show-realtime", title: "查看实时视频",className:"esri-icon-time-clock"}];
 	       view.popup.on("trigger-action", function(event){
 				if(event.action.id === "show-realtime"){
-					alert($(event.target.content)[0].graphic.attributes[0].videoId);
-					console.log($(event.target.content)[0].graphic.attributes[0].videoId);
+					window.open("./videoTest?videoId="+$(event.target.content)[0].graphic.attributes[0].videoId,"newWindow","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+					//console.log($(event.target.content)[0].graphic.attributes[0].videoId);
 				}
 			});
 	        var markerSymbol = {

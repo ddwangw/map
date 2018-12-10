@@ -87,7 +87,10 @@ public class ArtemisUtil {
                  put("https://", getSecurityApi);
             }
         };
-        String result = ArtemisHttpUtil.doGetArtemis(path, null,null,null);
+        String result =  ArtemisHttpUtil.doGetArtemis(path, null,null,null);
+        if("null".equals(result)||null==result) {
+        	result = "{\"msg\":\"ERROR\"}";
+        }
 		return result;
 	}
 	

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WebPageController {
@@ -13,7 +14,6 @@ public class WebPageController {
      */
     @RequestMapping("/map")
     public String mapHtml(HashMap<String, Object> map) {
-//        map.put("hello", "欢迎进入HTML页面");
         return "/GraphicIndex";
     }
     
@@ -22,7 +22,8 @@ public class WebPageController {
      * @return
      */
     @RequestMapping("/videoTest")
-    public String videoHtml(HashMap<String, Object> map) {
+    public String videoHtml(HashMap<String, Object> map,@RequestParam(name = "videoId") String videoId) {
+    	map.put("videoId", videoId);
         return "/playview";
     }
 }
