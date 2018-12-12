@@ -6,14 +6,13 @@
 </head>
 <body>
     <!-- <div class="func-point">&nbsp;&nbsp;监控画面</div> -->
-    <div class="video-position" style="width:500px; height:500px">
-        <p class="pop" style="display:block">加载失败</p>
+    <div class="video-position" style="margin:auto;border: 1px solid #adadad;width:500px; height:500px;background:url(./img/loading.gif) no-repeat center center;">
         <input type="hidden" name="config" id="config" value="ReqType:PlayReal;wndcount:1" />
         <!-- 添加预览控件（需要先在windows下注册） -->
         <object classid="CLSID:7E393848-7238-4CE3-82EE-44AF444B240A" id="PlayViewOCX" wmode="opaque" width="0" height="0" name="PlayViewOCX">
         </object>
     </div>
-    <div class="form" style="display:none">
+    <div class="form" style="display:none;">
         <label for="PalyType">PalyType:</label>
         <br />
         <input type="text" class="PalyType text" value="PlayReal" />
