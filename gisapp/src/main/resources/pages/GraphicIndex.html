@@ -92,7 +92,8 @@
 	        "dojo/domReady"], 
 	    function (Map,TileLayer,Basemap,MapView,PopupTemplate,Graphic) {
 	    	var layer = new TileLayer({
-	          	url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer"
+	          	//url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer"
+	          	url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer"
 	        });
 	        var customBasemap = new Basemap({
 		        baseLayers: [layer],
@@ -119,9 +120,14 @@
 	        };
 	       view.popup.actions = [{ id: "show-realtime", title: "查看实时视频",className:"esri-icon-time-clock"}];
 	       view.popup.on("trigger-action", function(event){
+	    	   var tempId = "";
 				if(event.action.id === "show-realtime"){
-					window.open("./videoTest?videoId="+$(event.target.content)[0].graphic.attributes[0].videoId,"newWindow","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
-					//console.log($(event.target.content)[0].graphic.attributes[0].videoId);
+					if( undefined != event.target.videoId ){
+						tempId = event.target.videoId;
+					}else{
+						tempId = $(event.target.content)[0].graphic.attributes[0].videoId
+					}
+					window.open("./videoTest?videoId="+tempId,"newWindow","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
 				}
 			});
 	        var markerSymbol = {
@@ -138,7 +144,7 @@
 	        var tempGraphicObj = null;
 	        //初始化video list table 点击事件
 	        initTableList(function(obj){
-	        	var checkVideoPointGraphic = graphicObjs[obj.children[0].innerText];
+	        	var checkVideoPointGraphic = graphicObjs[obj.children[0].innerText.trim()];
 	        	//判断之前是否为空
 	        	if(tempGraphicObj!=null){
 	        		view.graphics.remove(tempGraphicObj);
@@ -154,6 +160,7 @@
         		view.center = checkVideoPointGraphic.geometry;
         		//打开弹窗
         		view.popup.open({
+        			videoId:obj.children[0].innerText.trim(),
         			title:obj.children[1].innerText,
         			location:checkVideoPointGraphic.geometry,
         			content:checkVideoPointGraphic.popupTemplate.content
@@ -173,6 +180,7 @@
 						latitude: row.videoLat
 			        };
 			        var pointPopupTemplate = new PopupTemplate({
+			        		videoId:row.videoId,
 			        		title:row.videoName,
 							content:"<ul>"+
 			        				"<li>摄像头编号："+row.videoId+"</li>" +
