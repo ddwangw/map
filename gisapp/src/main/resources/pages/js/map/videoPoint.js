@@ -29,7 +29,7 @@ function initTableList(onClickRow){
  * @date     2018-10-19
  */
 function initPointTableList(showVedioPoint){
-	var url = "http://localhost:8080/video/queryPageWithParams?videoName=";
+	var url = "./video/queryPageWithParams?videoName=";
 	$.get(url,function(result){
 		loadLayuiPageTable(result);
 		showVedioPoint(result);
