@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>点位地图</title>
+    <link rel="stylesheet" href="./arcgis_js_api/library/3.26/3.26/esri/themes/calcite/dijit/calcite.css" />
+    <link rel="stylesheet" href="./arcgis_js_api/library/3.26/3.26/esri/themes/calcite/esri/esri.css" />
+    <link href="./css/layui.css" type="text/css" rel="stylesheet"/>
+    <script src="./js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/layui.js"></script>
+	<script src="./js/nicePage.js"></script>
+	<script src="./js/map/videoPoint.js"></script>
+    <style>
+      html,body {
+        height:100%;
+        width:100%;
+        margin:0;
+      }
+      body {
+        background-color:#FFF;
+        overflow:hidden;
+        font-family:"Trebuchet MS";
+      }
+      #map {
+        border:solid 2px #808775;
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        border-radius:4px;
+        margin:5px;
+        padding:0px;
+      }
+      #titlePane{
+        width:280px;
+      }
+       #videoTableList{
+	    width: 400px;
+	    height: 460px;
+	    margin: 10px;
+       }
+     .calcite .esriPopup .titleButton.maximize {
+	    display: none;
+	}
+    </style>
+
+    <script src="./arcgis_js_api/library/3.26/3.26/init.js"></script>
+    <script>
+    require([
+        "dojo/dom",
+        "esri/Color",
+        "dojo/keys",
+        "dojo/parser",
+
+        "esri/config",
+        "esri/sniff",
+        "esri/map",
+        "esri/layers/ArcGISTiledMapServiceLayer", 
+        "esri/SnappingManager",
+        "esri/dijit/Measurement",
+        "esri/layers/FeatureLayer",
+        "esri/renderers/SimpleRenderer",
+        "esri/tasks/GeometryService",
+        "esri/symbols/SimpleLineSymbol",
+        "esri/symbols/SimpleFillSymbol",
+        
+        "esri/layers/GraphicsLayer",
+        "esri/graphic",
+        "esri/InfoTemplate",
+        "esri/geometry/Point",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/units",
+        
+
+        "esri/dijit/Scalebar",
+        "dijit/layout/BorderContainer",
+        "dijit/layout/ContentPane",
+        "dijit/TitlePane",
+        "dijit/form/CheckBox",
+        "dojo/domReady!"
+      ], function(
+        dom, Color, keys, parser,
+        esriConfig, has, Map,ArcGISTiledMapServiceLayer, 
+        SnappingManager, Measurement, FeatureLayer, SimpleRenderer,
+        GeometryService, SimpleLineSymbol, SimpleFillSymbol,
+        
+        GraphicsLayer,Graphic,InfoTemplate,Point,SimpleMarkerSymbol,units
+      ) {
+        parser.parse();
+        //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications
+        esriConfig.defaults.geometryService = new GeometryService("https://utility.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
+       var mapObj = new Map("map", {
+          slider:false,
+          center: [121.3453611, 31.46216667],
+          zoom: 12
+        });
+		var tiled = new ArcGISTiledMapServiceLayer("http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer");
+		var graphicLayer = new GraphicsLayer()
+		mapObj.addLayers([tiled,graphicLayer]);
+		
+		 var markerSymbolChangeAfter = new SimpleMarkerSymbol({
+     		"color": [247,57,107,150],
+	   		  "size": 18,
+	   		  "angle": -30,
+	   		  "xoffset": 0,
+	   		  "yoffset": 0,
+	   		  "type": "esriSMS",
+	   		  "style": "esriSMSCircle",
+	   		  "outline": {
+	   		    "color": [255,255,255,255],
+	   		    "width": 2,
+	   		    "type": "esriSLS",
+	   		    "style": "esriSLSSolid"
+	   		  }
+	        });
+		 
+		 var markerSymbol = new SimpleMarkerSymbol({
+       		  "color": [0,118,18,150],
+       		  "size": 16,
+       		  "angle": -30,
+       		  "xoffset": 0,
+       		  "yoffset": 0,
+       		  "type": "esriSMS",
+       		  "style": "esriSMSCircle",
+       		  "outline": {
+       		    "color": [255,255,255,255],
+       		    "width": 1,
+       		    "type": "esriSLS",
+       		    "style": "esriSLSSolid"
+       		  }
+       		});
+		
+		mapObj.infoWindow.resize(300,200);
+		mapObj.infoWindow.addActions([{ id: "show-realtime", title: "查看实时视频",className:"esri-icon-time-clock",callback:function(event){
+			var selectedFeature = mapObj.infoWindow.getSelectedFeature();
+			var tempId = selectedFeature.infoTemplate.videoId;
+			window.open("./videoTest?videoId="+tempId,"newWindow","menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+		}}]);
+        
+        
+        var measurement = new Measurement({
+          map: mapObj,
+         defaultLengthUnit:units.KILOMETERS,
+          defaultAreaUnit:units.SQUARE_KILOMETERS
+        }, dom.byId("measurementDiv"));
+        measurement.startup();
+        
+        var graphicObjs ={};
+        var tempGraphicObj = null;
+        
+        initTableList(function(obj){
+        	var checkVideoPointGraphic = graphicObjs[obj.children[0].innerText.trim()];
+        	//判断之前是否为空
+        	if(tempGraphicObj!=null){
+        		tempGraphicObj.setSymbol(markerSymbol);
+        		mapObj.infoWindow.hide();
+        		mapObj.infoWindow.clearFeatures([tempGraphicObj]);
+        	}
+    		checkVideoPointGraphic.setSymbol(markerSymbolChangeAfter);
+    		videoPoint(mapObj,checkVideoPointGraphic);
+    		tempGraphicObj = checkVideoPointGraphic;
+    		//顺序不能颠倒，否则infowindow会有问题
+    		mapObj.centerAndZoom(checkVideoPointGraphic.geometry,17);
+        });
+        
+        
+        initPointTableList(function(result){
+        	for(var key in graphicObjs){
+        		mapObj.graphics.remove(graphicObjs[key]);
+        	}
+        	
+        	for(var i in result){
+        		var row = result[i];
+		        var point = new Point(row.videoLon,row.videoLat,mapObj.spatialReference);
+
+		        var infoTemplate = new InfoTemplate({
+		        		videoId:row.videoId,
+		        		title:row.videoName,
+						content:"<ul>"+
+		        				"<li>摄像头编号："+row.videoId+"</li>" +
+								"<li>摄像头类型："+row.type+"</li>" +
+								"<li>视频分辨率："+row.resolutionRatio+"</li>"+
+								"<li>管理单位名称："+row.manageDeptName+"</li>"+
+								"<li>摄像头所在地址："+row.address+"</li>"+
+								"<li>坐标经度："+row.videoLon+"</li>"+
+								"<li>坐标纬度："+row.videoLat+"</li>"+
+								"</ul>"
+						});
+				var videoPoint = {
+			        	"attributes":[{"videoId":row.videoId}],
+			            "geometry": point,
+			            "infoTemplate":infoTemplate
+			        }
+		        var graphic = new Graphic(videoPoint);
+				graphic.setSymbol(markerSymbol);
+		        //将graphics添加到视窗图层
+		        graphicLayer.add(graphic);
+		        graphicObjs[row.videoId] = graphic;
+        	}
+        });
+      });
+    
+    function videoPoint(mapObj,checkVideoPointGraphic){
+    	//为InfoTemplate对象传入param，也就是graphic或feature
+    	mapObj.infoWindow.setFeatures([checkVideoPointGraphic]);
+    	//触发弹窗，传入位置
+    	mapObj.infoWindow.show(checkVideoPointGraphic.geometry);
+    }
+    </script>
+  </head>
+ <body class="calcite">
+    <div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline',gutters:false"
+    style="width:100%; height:100%;">
+      <div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+      	<div style="position:absolute; right:20px; top:10px; z-Index:999;">
+      	<div id="videoTableList">
+		    <input type="text" id="videoName" placeholder="请输入查询地址" autocomplete="off" class="layui-input" style="width:60%;display: inline;"/>
+		    <button class="layui-btn" id="query" style="vertical-align: unset;">查询</button>
+			<div style="width: 100%;background-color: white;">
+				<!--以下为两个必须div元素-->
+				<div id="table"></div>
+				<div id="pageBar" style="margin-left: 10px;"></div>
+			</div>
+		</div>
+      	</div>
+        <div style="position:absolute; left:20px; top:10px; z-Index:999;">
+          <div id="titlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title:'测量工具栏', closable:false">
+            <div id="measurementDiv"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -20,7 +20,11 @@ public class WebPageController {
         return  new ModelAndView("playview");
     }
     @RequestMapping("/graphicmap")
-    public ModelAndView bankInfo() {
+    public ModelAndView graphic() {
         return  new ModelAndView("GraphicIndex");
+    }
+    @RequestMapping("/pointmeasure")
+    public ModelAndView pointmeasuer() {
+        return  new ModelAndView("VideoGraphicOfMeasureTool");
     }
 }
