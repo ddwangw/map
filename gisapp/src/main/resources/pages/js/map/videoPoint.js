@@ -31,16 +31,25 @@ function initTableList(onClickRow){
 function initPointTableList(showVedioPoint){
 	var url = "./video/queryPageWithParams?videoName=";
 	$.get(url,function(result){
-		loadLayuiPageTable(result);
-		showVedioPoint(result);
+		initVideoPointResultData(result,showVedioPoint);
 	});
 	//绑定查询按钮点击事件
 	$("#query").click(function(){
-		$.get(url+$("#videoName").val(),function(result){
-			loadLayuiPageTable(result);
-			showVedioPoint(result);
+		var videoNameStr = encodeURI($("#videoName").val());
+		$.get(url+videoNameStr,function(result){
+			initVideoPointResultData(result,showVedioPoint);
 		});
 	});
+}
+function initVideoPointResultData(result,showVedioPoint){
+	var rowsObj = null;
+	if(typeof result == "string"){
+		rowsObj = $.parseJSON(result);
+	}else{
+		rowsObj = result;
+	}
+	loadLayuiPageTable(rowsObj);
+	showVedioPoint(rowsObj);
 }
 //加载
 function loadLayuiPageTable(result){
