@@ -165,12 +165,12 @@
         
         initPointTableList(function(result){
         	for(var key in graphicObjs){
-        		mapObj.graphics.remove(graphicObjs[key]);
+        		graphicLayer.remove(graphicObjs[key]);
         	}
-        	
+        	graphicObjs = {};
         	for(var i in result){
         		var row = result[i];
-		        var point = new Point(row.videoLon,row.videoLat,mapObj.spatialReference);
+		        var point = new Point(row.videoLon,row.videoLat,{wkid: 4326});
 
 		        var infoTemplate = new InfoTemplate({
 		        		videoId:row.videoId,
