@@ -99,7 +99,7 @@
 		
 		 var markerSymbolChangeAfter = new SimpleMarkerSymbol({
      		"color": [247,57,107,150],
-	   		  "size": 18,
+	   		  "size": 10,
 	   		  "angle": -30,
 	   		  "xoffset": 0,
 	   		  "yoffset": 0,
@@ -115,7 +115,7 @@
 		 
 		 var markerSymbol = new SimpleMarkerSymbol({
        		  "color": [0,118,18,150],
-       		  "size": 16,
+       		  "size": 10,
        		  "angle": -30,
        		  "xoffset": 0,
        		  "yoffset": 0,
@@ -173,7 +173,7 @@
 		        var point = new Point(row.videoLon,row.videoLat,{wkid: 4326});
 
 		        var infoTemplate = new InfoTemplate({
-		        		videoId:row.videoId,
+		        		videoId:row.videoChanal,
 		        		title:row.videoName,
 						content:"<ul>"+
 		        				"<li>摄像头编号："+row.videoId+"</li>" +
@@ -181,6 +181,7 @@
 								"<li>视频分辨率："+row.resolutionRatio+"</li>"+
 								"<li>管理单位名称："+row.manageDeptName+"</li>"+
 								"<li>摄像头所在地址："+row.address+"</li>"+
+								"<li>设备通道："+row.videoChanal+"</li>" +
 								"<li>坐标经度："+row.videoLon+"</li>"+
 								"<li>坐标纬度："+row.videoLat+"</li>"+
 								"</ul>"

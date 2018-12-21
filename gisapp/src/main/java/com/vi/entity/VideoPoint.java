@@ -45,6 +45,9 @@ public class VideoPoint implements Serializable{
     @Column(name="RESOLUTION_RATIO")
     private String resolutionRatio;//视频分辨率
     
+    @Column(name="VIDEO_CHANAL")
+    private String videoChanal;//视频VIDEO_CHANAL
+    
     
     @Column(name="VIDEO_LAT")
     private String videoLat;
@@ -110,5 +113,13 @@ public class VideoPoint implements Serializable{
 
 	public void setVideoLat(String videoLat) {
 		this.videoLat = videoLat;
+	}
+
+	public String getVideoChanal() {
+		return videoChanal;
+	}
+
+	public void setVideoChanal(String videoChanal) {
+		this.videoChanal = videoChanal;
 	}
 }
