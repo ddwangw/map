@@ -27,4 +27,12 @@ public class WebPageController {
     public ModelAndView pointmeasuer() {
         return  new ModelAndView("VideoGraphicOfMeasureTool");
     }
+    /**
+     * 多图层管理
+     * @return
+     */
+    @RequestMapping("/layermanage")
+    public ModelAndView layermanage() {
+        return  new ModelAndView("MapLayerManager");
+    }
 }
