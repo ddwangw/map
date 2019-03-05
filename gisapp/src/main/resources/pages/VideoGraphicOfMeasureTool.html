@@ -54,7 +54,7 @@
         "esri/config",
         "esri/sniff",
         "esri/map",
-        "esri/layers/ArcGISTiledMapServiceLayer", 
+        "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/geometry/Extent",
         "esri/SnappingManager",
         "esri/dijit/Measurement",
         "esri/layers/FeatureLayer",
@@ -79,23 +79,38 @@
         "dojo/domReady!"
       ], function(
         dom, Color, keys, parser,
-        esriConfig, has, Map,ArcGISTiledMapServiceLayer, 
+        esriConfig, has, Map,ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer,Extent,
         SnappingManager, Measurement, FeatureLayer, SimpleRenderer,
         GeometryService, SimpleLineSymbol, SimpleFillSymbol,
         
-        GraphicsLayer,Graphic,InfoTemplate,Point,SimpleMarkerSymbol,units
+        GraphicsLayer,Graphic,InfoTemplate,Point,SimpleMarkerSymbol,units,
+        Scalebar
       ) {
         parser.parse();
+        var lods = [
+                    {"level" : 0, "resolution" : 0.010986328125, "scale" : 4617149.97766929},
+                    {"level" : 1, "resolution" : 0.0054931640625, "scale" : 2308574.98883465},
+                    {"level" : 2, "resolution" : 0.00274658203125, "scale" : 1154287.49441732},
+                    {"level" : 3, "resolution" : 0.001373291015625, "scale" : 577143.747208662},
+                    {"level" : 4, "resolution" : 0.0006866455078125, "scale" : 288571.873604331}
+                  ];
         //This service is for development and testing purposes only. We recommend that you create your own geometry service for use within your applications
-        esriConfig.defaults.geometryService = new GeometryService("https://utility.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
+       esriConfig.defaults.geometryService = new GeometryService("https://utility.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
        var mapObj = new Map("map", {
-          slider:false,
-          center: [121.3453611, 31.46216667],
-          zoom: 12
-        });
-		var tiled = new ArcGISTiledMapServiceLayer("http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer");
+    	 // extent : new Extent({xmin:-17000,ymin:3402,xmax:5190,ymax:30506,spatialReference:{wkid:4214}})
+       }); 
+     //维护比例尺工具
+       var scalebar = new Scalebar({
+				    map: mapObj,
+				    attachTo: "bottom-left",
+				    scalebarStyle:"line",
+				    scalebarUnit:"metric"
+				  });
+		//var tiled = new ArcGISTiledMapServiceLayer("http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer");
+		var tiled = new ArcGISDynamicMapServiceLayer("http://172.17.6.224:6080/arcgis/rest/services/BaoshanShare/basemap_310113_detail2/MapServer");
+		var regionMap = new ArcGISDynamicMapServiceLayer("http://172.17.6.224:6080/arcgis/rest/services/BaoshanShare/basemap_310113_baoshan/MapServer");
 		var graphicLayer = new GraphicsLayer()
-		mapObj.addLayers([tiled,graphicLayer]);
+		mapObj.addLayers([tiled,regionMap,graphicLayer]);
 		
 		 var markerSymbolChangeAfter = new SimpleMarkerSymbol({
      		"color": [247,57,107,150],
@@ -159,7 +174,8 @@
     		videoPoint(mapObj,checkVideoPointGraphic);
     		tempGraphicObj = checkVideoPointGraphic;
     		//顺序不能颠倒，否则infowindow会有问题
-    		mapObj.centerAndZoom(checkVideoPointGraphic.geometry,17);
+    		var pointNew = new Point(checkVideoPointGraphic.geometry.x,checkVideoPointGraphic.geometry.y);
+    		mapObj.centerAndZoom(pointNew,26);
         });
         
         
@@ -170,7 +186,7 @@
         	graphicObjs = {};
         	for(var i in result){
         		var row = result[i];
-		        var point = new Point(row.videoLon,row.videoLat,{wkid: 4326});
+		        var point = new Point(row.videoLon,row.videoLat);
 
 		        var infoTemplate = new InfoTemplate({
 		        		videoId:row.videoChanal,
@@ -211,7 +227,7 @@
  <body class="calcite">
     <div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline',gutters:false"
     style="width:100%; height:100%;">
-      <div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+      <div id="map" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'" style="background-color:#f7f7f7;">
       	<div style="position:absolute; right:20px; top:10px; z-Index:999;">
       	<div id="videoTableList">
 		    <input type="text" id="videoName" placeholder="请输入查询地址" autocomplete="off" class="layui-input" style="width:60%;display: inline;"/>
@@ -223,7 +239,7 @@
 			</div>
 		</div>
       	</div>
-        <div style="position:absolute; left:20px; top:10px; z-Index:999;">
+        <div style="position:absolute; left:10px; top:10px; z-Index:999;">
           <div id="titlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title:'测量工具栏', closable:false">
             <div id="measurementDiv"></div>
           </div>
