@@ -1,0 +1,112 @@
+{
+	"code": 200,
+	"msg": "获取已申请图层数据成功",
+	"data": [{
+			"featurServerUrl": "http://172.17.6.224:6080/arcgis/rest/services/BaoshanShare/thememap_310113_videopoint/MapServer/0",
+			"featureSeverName": "视频点位",
+			"queryFields": [{
+					"fieldName": "sbmc",
+					"fieldZhName": "设备名称",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "gldw",
+					"fieldZhName": "管理单位",
+					"fieldType": "string"
+				}
+			],
+			"resultFields": [
+				{
+					"fieldName": "sbmc",
+					"fieldZhName": "设备名称",
+					"fieldType": "string"
+				},{
+					"fieldName": "gldw",
+					"fieldZhName": "设备名称",
+					"fieldType": "string"
+				}
+			]
+		},
+		{
+			"featurServerUrl": "http://172.17.6.224:6080/arcgis/rest/services/BaoshanShare/thememap_310113_baseStation/MapServer/0",
+			"featureSeverName": "基站分布",
+			"queryFields": [
+				{
+					"fieldName": "运营商",
+					"fieldZhName": "运营商",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "基站名称",
+					"fieldZhName": "基站名称",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "地址",
+					"fieldZhName": "地址",
+					"fieldType": "string"
+				}
+			],
+			"resultFields": [{
+					"fieldName": "运营商",
+					"fieldZhName": "运营商",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "基站名称",
+					"fieldZhName": "基站名称",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "地址",
+					"fieldZhName": "地址",
+					"fieldType": "string"
+				}
+			]
+		},
+		{
+			"featurServerUrl": "http://172.17.6.224:6080/arcgis/rest/services/BaoshanShare/thememap_310113_industryUnit/MapServer/0",
+			"featureSeverName": "工业单位",
+			"queryFields": [
+				{
+					"fieldName": "FIELD_0",
+					"fieldZhName": "FIELD_0",
+					"fieldType": "string"
+				}
+			],
+			"resultFields": [{
+					"fieldName": "FIELD_0",
+					"fieldZhName": "FIELD_0",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "FIELD_1",
+					"fieldZhName": "FIELD_1",
+					"fieldType": "string"
+				}
+			]
+		},
+		{
+			"featurServerUrl": "http://172.17.6.224:6080/arcgis/rest/services/BaoshanShare/thememap_310113_pipeline/MapServer/0",
+			"featureSeverName": "管线",
+			"queryFields": [
+				{
+					"fieldName": "路名",
+					"fieldZhName": "路名",
+					"fieldType": "string"
+				}
+			],
+			"resultFields": [{
+					"fieldName": "长度",
+					"fieldZhName": "长度",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "路名",
+					"fieldZhName": "路名",
+					"fieldType": "string"
+				}
+			]
+		}
+	]
+}

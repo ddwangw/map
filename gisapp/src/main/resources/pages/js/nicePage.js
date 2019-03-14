@@ -39,8 +39,12 @@ window.nicePage = {
 	returnTable : function(e) {
 		var h = e.split("_");
 		var g = "<tr onclick='nicePage.onclick(this);'>";
+		var textAlign = "style='text-align:center;'";
 		for ( var f in h) {
-			g += "<td>" + h[f] + "</td>"
+			if(f!=0){
+				textAlign = '';
+			}
+			g += "<td "+textAlign+">" + h[f] + "</td>"
 		}
 		g += "</tr>";
 		return g

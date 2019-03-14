@@ -1,0 +1,53 @@
+{
+	"code": 200,
+	"msg": "获取已申请图层数据成功",
+	"data": [{
+			"featurServerUrl": "http://www.arcgisonline.cn/server/rest/services/neimenggu/POI/MapServer/0",
+			"featureSeverName": "内蒙古自治区兴趣点数据",
+			"queryFields": [{
+					"fieldName": "TYPE",
+					"fieldZhName": "类型代码",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "NAME",
+					"fieldZhName": "兴趣点名称",
+					"fieldType": "string"
+				}
+			],
+			"resultFields": [
+				{
+					"fieldName": "NAME",
+					"fieldZhName": "兴趣点名称",
+					"fieldType": "string"
+				},{
+					"fieldName": "类型",
+					"fieldZhName": "类型",
+					"fieldType": "string"
+				}
+			]
+		},
+		{
+			"featurServerUrl": "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/Dog_Friendly_Hikes/FeatureServer/0",
+			"featureSeverName": "Dog_Friendly_Hikes",
+			"queryFields": [
+				{
+					"fieldName": "Name",
+					"fieldZhName": "名称",
+					"fieldType": "string"
+				}
+			],
+			"resultFields": [{
+					"fieldName": "Name",
+					"fieldZhName": "名称",
+					"fieldType": "string"
+				},
+				{
+					"fieldName": "Details",
+					"fieldZhName": "详细信息",
+					"fieldType": "string"
+				}
+			]
+		}
+	]
+}

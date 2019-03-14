@@ -28,6 +28,18 @@ public class WebPageController {
         return  new ModelAndView("VideoGraphicOfMeasureTool");
     }
     /**
+     * 共享平台用户申请矢量数据服务接口展示页面
+     * 
+     * @param map
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/dataLayerManager")
+    public ModelAndView dataLayerManager(HashMap<String, Object> map,@RequestParam(name = "userId") String userId) {
+    	map.put("userId", userId);
+        return  new ModelAndView("DataLayerManager");
+    }
+    /**
      * 多图层管理
      * @return
      */
